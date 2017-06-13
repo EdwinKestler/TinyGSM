@@ -290,6 +290,19 @@ public:
     res.trim();
     return res;
   }
+  
+  String getNetTime(){
+    sendAT (GF("+CLTS=1"));
+  	waitResponse ();
+  	sendAT (GF("+CCLK?"));
+  	if(waitResponse(GF(GSM_NL"+CCLK:")) !=1){
+  		return"";
+  	}
+  	String res = stream.readStringUntil('\n');
+  	waitResponse();
+  	res.trim();
+  	return res;
+  }
 
   bool setGsmBusy(bool busy = true) {
     sendAT(GF("+GSMBUSY="), busy ? 1 : 0);
